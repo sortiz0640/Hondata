@@ -1,0 +1,3 @@
+C:/Users/sorti/OneDrive/Escritorio/Estructuras de Datos/Personal/build/CMakeFiles/main.dir
+C:/Users/sorti/OneDrive/Escritorio/Estructuras de Datos/Personal/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/sorti/OneDrive/Escritorio/Estructuras de Datos/Personal/build/CMakeFiles/ZERO_CHECK.dir
