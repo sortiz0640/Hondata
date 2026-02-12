@@ -37,10 +37,12 @@ public:
 
         CarDTO car;
 
+        soci::transaction tr(sql);
         sql << "SELECT id, color, transmission, idModel, idEngineInstance FROM Car WHERE id = :id",
         soci::into(car.id), soci::into(car.color), soci::into(car.transmission), 
         soci::into(car.idModel), soci::into(car.idEngineInstance),
         soci::use(id);
+        tr.commit();
 
         return car;
 

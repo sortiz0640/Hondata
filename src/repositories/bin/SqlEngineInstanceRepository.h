@@ -40,10 +40,10 @@ public:
     EngineInstanceDTO findById(int idEngineInstance) override {
 
         EngineInstanceDTO instance;
-        soci::transaction tr(sql);
-        sql <<"SELECT id, condition, mileage, operatingHours, isOperative, hasOverhaul, idEngineSpecification WHERE id = :id FROM EngineInstance", soci::use(idEngineInstance);
-        tr.commit();
-
+        sql <<"SELECT id, condition, mileage, operatingHours, isOperative, hasOverhaul, idEngineSpecification WHERE id = :id FROM EngineInstance", 
+        soci::into(instance.id), soci::into(instance.condition), soci::into(instance.mileage), soci::into(instance.operatingHours), soci::into(instance.isOperative),
+        soci::into(instance.hasOverhaul), soci::into(instance.idSpecification),
+        soci::use(idEngineInstance);
         return instance;
 
     }
