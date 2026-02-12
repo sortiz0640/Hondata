@@ -28,8 +28,6 @@ public:
     }
 
     void removeById(int idCar) override {
-        // this also drops EngineInstance related table in database
-
         soci::transaction tr(sql);
         sql << "DELETE FROM Car WHERE id = :id", soci::use(idCar);
         tr.commit();
