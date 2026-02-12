@@ -19,8 +19,10 @@ public:
 
         soci::transaction tr(sql);
         sql << "INSERT INTO EngineSpecification (configuration, fuel, power, torque, compression, hasVTEC, idManufacturer) "
-            "VALUES (:config, :fuel, :power, :torque, :compression, :hasVTEC, :idManufacturer)";
-        soci::use(dto.configuration), soci::use(dto.fuel), soci::use(dto.power), soci::use(dto.torque), soci::use(dto.compression), soci::use(dto.hasVTEC), soci::use(dto.idManufacturer);
+            "VALUES (:config, :fuel, :power, :torque, :compression, :hasVTEC, :idManufacturer)",
+            soci::use(dto.configuration), soci::use(dto.fuel), soci::use(dto.power), 
+            soci::use(dto.torque), soci::use(dto.compression), soci::use(dto.hasVTEC), 
+            soci::use(dto.idManufacturer);
         tr.commit();
 
     }
@@ -40,9 +42,12 @@ public:
     EngineSpecDTO findById(int idEngineSpec) override {
 
         EngineSpecDTO spec;
-        sql <<"SELECT id, configuration, fuel, power, torque, compression, hasVTEC, idManufacturer FROM EngineSpecification WHERE id = :id", soci::use(idEngineSpec);
-        soci::into(spec.id), soci::into(spec.configuration), soci::into(spec.fuel), soci::into(spec.power), soci::into(spec.torque),
-        soci::into(spec.compression), soci::into(spec.hasVTEC), soci::into(spec.idManufacturer);
+        sql << "SELECT id, configuration, fuel, power, torque, compression, hasVTEC, idManufacturer "
+                "FROM EngineSpecification WHERE id = :id",
+                soci::into(spec.id), soci::into(spec.configuration), soci::into(spec.fuel), 
+                soci::into(spec.power), soci::into(spec.torque), soci::into(spec.compression), 
+                soci::into(spec.hasVTEC), soci::into(spec.idManufacturer),
+                soci::use(idEngineSpec);
         return spec;
 
     }

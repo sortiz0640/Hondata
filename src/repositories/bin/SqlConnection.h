@@ -7,26 +7,27 @@
 #include <string>
 
 class SqlConnection {
+private:
+    std::unique_ptr<soci::session> session;
+    
 public:
-    static soci::session openSession() {
-        try {
-
-            std::string connectString =
+    SqlConnection() {
+        std::string connectString =
                         "DRIVER={ODBC Driver 18 for SQL Server};"
                         "SERVER=.\\SQLEXPRESS;"
                         "DATABASE=db_hondata;"
                         "Trusted_Connection=yes;"
                         "TrustServerCertificate=yes;";
-
-            return soci::session(soci::odbc, connectString);
-
-        } catch (const soci::soci_error& e) {
-            std::cout << "Error de conexion: " << e.what() << std::endl;
-            throw;
-        }
+        session = std::make_unique<soci::session>(soci::odbc, connectString);
+    }
+    
+    soci::session& getSession() {
+        return *session;
     }
 };
 
 
 
 #endif
+
+            

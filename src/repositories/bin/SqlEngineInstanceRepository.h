@@ -18,9 +18,10 @@ public:
     void add(const EngineInstanceDTO& dto) override {
 
         soci::transaction tr(sql);
-        sql << "INSERT INTO EngineInstance (condition, mileage, operatingHours, isOperative, hasOverhaul, idEngineSpecification) ",
-                "VALUES (:condition, :mileage, :hours, :operative, :overhaul, :spec)";
-        soci::use(dto.condition), soci::use(dto.mileage), soci::use(dto.operatingHours), soci::use(dto.isOperative), soci::use(dto.hasOverhaul), soci::use(dto.idSpecification);
+        sql << "INSERT INTO EngineInstance (condition, mileage, operatingHours, isOperative, hasOverhaul, idEngineSpecification) "
+            "VALUES (:condition, :mileage, :hours, :operative, :overhaul, :spec)",
+            soci::use(dto.condition), soci::use(dto.mileage), soci::use(dto.operatingHours), 
+            soci::use(dto.isOperative), soci::use(dto.hasOverhaul), soci::use(dto.idSpecification);
         tr.commit();
 
     }
@@ -40,7 +41,7 @@ public:
     EngineInstanceDTO findById(int idEngineInstance) override {
 
         EngineInstanceDTO instance;
-        sql <<"SELECT id, condition, mileage, operatingHours, isOperative, hasOverhaul, idEngineSpecification WHERE id = :id FROM EngineInstance", 
+        sql << "SELECT id, condition, mileage, operatingHours, isOperative, hasOverhaul, idEngineSpecification FROM EngineInstance WHERE id = :id",
         soci::into(instance.id), soci::into(instance.condition), soci::into(instance.mileage), soci::into(instance.operatingHours), soci::into(instance.isOperative),
         soci::into(instance.hasOverhaul), soci::into(instance.idSpecification),
         soci::use(idEngineInstance);
@@ -65,7 +66,7 @@ public:
                 engine.operatingHours = it->get<int>(3);
                 engine.isOperative = it->get<int>(4);
                 engine.hasOverhaul = it->get<int>(5);
-                engine.hasOverhaul = it->get<int>(6);
+                engine.idSpecification = it->get<int>(6);
                 
                 instances.push_back(engine); // pushes a EngineInstance into the vector instances 
             }
